@@ -96,8 +96,7 @@ function procesarIgual(textoTecla) {
   //No hay operación pendiente.
   if (operador != "") {
     expresionDisplay.innerText=expresionDisplay.innerText+resultado+"="
-    resultado = eval(parseFloat(operando1) + operador + parseFloat(resultado))
-    operando1 = ""
+    resultado = seleccionarOperacion(operando1,resultado,operador)
     operador = ""
     resultado = resultado.toString()
     igual = true
@@ -153,53 +152,45 @@ function operar(textoTecla) {
   } else {
     //Existe una expresión iniciada.
     if (operador != "") {
-      switch (operador) {
-        //Suma
-        case "+":
-          operando1 = parseFloat(operando1) + parseFloat(resultado)
-          break;
-        //Resta
-        case "-":
-          operando1 = parseFloat(operando1) - parseFloat(resultado)
-          break;
-        //Multiplicación.
-        case "*":
-          operando1 = parseFloat(operando1) * parseFloat(resultado)
-          break;
-        //División.
-        case "/":
-          operando1 = parseFloat(operando1) / parseFloat(resultado)
-          break;
-      }
-      operador = textoTecla;
-      expresionDisplay.innerText = operando1 + operador
+      operando1=seleccionarOperacion(operando1,resultado,operador);
+     //No hay una expresión iniciada
     } else {
-      switch (textoTecla) {
-        //Suma
-        case "+":
-          operando1 = parseFloat(operando1) + parseFloat(resultado)
-          break;
-        //Resta
-        case "-":
-          operando1 = parseFloat(operando1) - parseFloat(resultado)
-          break;
-        //Multiplicación.
-        case "*":
-          operando1 = parseFloat(operando1) * parseFloat(resultado)
-          break;
-        //División.
-        case "/":
-          operando1 = parseFloat(operando1) / parseFloat(resultado)
-          break;
-      }
-      operador = ""
+      operando1=resultado
     }
+    operador = textoTecla;
+    expresionDisplay.innerText = operando1 + operador
   }
   igual = false
   resultado = "0"
   existePunto = false
   resultadoDisplay.innerText = resultado  //Muestra en el display.
 }
+
+//-------------------------------------------------------------------------------------------------
+//Seleccionar operación.
+function seleccionarOperacion(operando1, operando2 ,operacion){
+  let resultado=0
+  switch (operacion) {
+    //Suma
+    case "+":
+      resultado = parseFloat(operando1) + parseFloat(operando2)
+      break;
+    //Resta
+    case "-":
+      resultado = parseFloat(operando1) - parseFloat(operando2)
+      break;
+    //Multiplicación.
+    case "*":
+      resultado = parseFloat(operando1) * parseFloat(operando2)
+      break;
+    //División.
+    case "/":
+      resultado = parseFloat(operando1) / parseFloat(operando2)
+      break;
+  }
+  return resultado;
+}
+
 
 //-------------------------------------------------------------------------------------------------
 //Ejecución
