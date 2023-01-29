@@ -15,6 +15,7 @@ const resultadoDisplay = document.getElementById('resultado')
 //-------------------------------------------------------------------------------------------------
 //Inicializacion.
 function inicializacion() {
+  expresionDisplay.innerText = ""
   resultado = "0"; //Resultado.
   iniciarOperando = true; //Flag iniciar número en resutadoDisplay.
   existePunto = false; //Flag presencia del punto decimal.
@@ -22,7 +23,7 @@ function inicializacion() {
   operando1 = ""; //Primer operando.
   igual = false
   resultadoDisplay.innerText = resultado
-  mostrarExpresion()
+  expresionDisplay.innerText=""
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -64,6 +65,9 @@ function accionTecla() {
 //-------------------------------------------------------------------------------------------------
 //Inicializa el resultado.
 function inicializaResultado() {
+  if(igual){
+    expresionDisplay.innerText=""
+  }
   igual = false
   resultado = 0
   existePunto = false; //Flag presencia del punto decimal.
@@ -91,6 +95,7 @@ function invertirSigno() {
 function procesarIgual(textoTecla) {
   //No hay operación pendiente.
   if (operador != "") {
+    expresionDisplay.innerText=expresionDisplay.innerText+resultado+"="
     resultado = eval(parseFloat(operando1) + operador + parseFloat(resultado))
     operando1 = ""
     operador = ""
@@ -98,7 +103,7 @@ function procesarIgual(textoTecla) {
     igual = true
     resultadoDisplay.innerText = resultado
   }
-  mostrarExpresion()
+
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -138,10 +143,12 @@ function procesarPunto(textoTecla) {
 function operar(textoTecla) {
   //No existe operando previo
   if (operando1 == "") {
+    expresionDisplay.innerText=resultado
     operando1 = resultado
     operador = textoTecla
     existePunto = false
     iniciarOperando = true
+    expresionDisplay.innerText=resultado+operador
     //Existe un operando previo.
   } else {
     //Existe una expresión iniciada.
@@ -165,6 +172,7 @@ function operar(textoTecla) {
           break;
       }
       operador = textoTecla;
+      expresionDisplay.innerText = operando1 + operador
     } else {
       switch (textoTecla) {
         //Suma
@@ -191,13 +199,6 @@ function operar(textoTecla) {
   resultado = "0"
   existePunto = false
   resultadoDisplay.innerText = resultado  //Muestra en el display.
-  mostrarExpresion()
-}
-
-//-------------------------------------------------------------------------------------------------
-//
-function mostrarExpresion() {
-  expresionDisplay.innerText = operando1 + operador
 }
 
 //-------------------------------------------------------------------------------------------------
