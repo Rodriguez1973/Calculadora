@@ -2,13 +2,19 @@
 <html lang="es">
 
 <head>
-    <title>Este texto es el título del documento</title>
+    <title>Calculadora básica</title>
     <script src="codigojs.js" defer></script>
     <link rel="stylesheet" href="./css/estilos.css">
 </head>
 
 <body>
     <table id="principal">
+        <tr>
+            <td id="display" colspan="4">
+                <p id="expresion"></p>
+                <p id="resultado"></p>
+            </td>
+        </tr>
         <tr>
             <td>7</td>
             <td>8</td>
@@ -29,18 +35,16 @@
         </tr>
         <tr>
             <td>0</td>
+            <td>+/-</td>
             <td>.</td>
-            <td> </td>
             <td>/</td>
         </tr>
         <tr>
             <td>CE</td>
             <td>C</td>
-            <td colspan="2">=</td>
+            <td class="btnAncho" colspan="2">=</td>
         </tr>
     </table>
-    <p id="moperacion"></p>
-    <p id="resultado"></p>
-</body>
+ </body>
 
 </html>
