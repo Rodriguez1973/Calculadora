@@ -141,9 +141,9 @@ function procesarPunto(textoTecla) {
 //-------------------------------------------------------------------------------------------------
 //Operar.
 function operar(textoTecla) {
+  
   //No existe operando previo
-  if (operando1 == "") {
-    expresionDisplay.innerText=resultado
+  if (operando1 == "" && resultado!=0) {
     operando1 = resultado
     operador = textoTecla
     existePunto = false
