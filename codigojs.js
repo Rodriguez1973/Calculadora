@@ -5,6 +5,7 @@ let iniciarOperando //Flag iniciar número en resutadoDisplay.
 let existePunto //Flag presencia del punto decimal.
 let operador //Operador.
 let operando1 //Primer operando.
+let igual //Flag que controla si igual fué la ultima operacion.
 
 //-------------------------------------------------------------------------------------------------
 //Referencias de los objetos del documento.
@@ -19,6 +20,7 @@ function inicializacion() {
   existePunto = false; //Flag presencia del punto decimal.
   operador = ""; //Operador.
   operando1 = ""; //Primer operando.
+  igual = false
   resultadoDisplay.innerText = resultado
   mostrarExpresion()
 }
@@ -62,7 +64,9 @@ function accionTecla() {
 //-------------------------------------------------------------------------------------------------
 //Inicializa el resultado.
 function inicializaResultado() {
+  igual = false
   resultado = 0
+  existePunto = false; //Flag presencia del punto decimal.
   resultadoDisplay.innerText = resultado;
 }
 
@@ -74,7 +78,7 @@ function invertirSigno() {
     //El primer caracter de la cadena no es -.
     if (resultado.charAt(0) != '-') {
       resultado = "-" + resultado
-    //El primer caracter de la cadena es -.
+      //El primer caracter de la cadena es -.
     } else {
       resultado = resultado.substring(1)
     }
@@ -91,6 +95,7 @@ function procesarIgual(textoTecla) {
     operando1 = ""
     operador = ""
     resultado = resultado.toString()
+    igual = true
     resultadoDisplay.innerText = resultado
   }
   mostrarExpresion()
@@ -99,29 +104,33 @@ function procesarIgual(textoTecla) {
 //-------------------------------------------------------------------------------------------------
 //Procesar que se ha pulsado la tecla de un número. 
 function procesarNumero(textoTecla) {
-  //Si es la inicialización.
-  if (resultado == "0" || iniciarOperando) {
-    resultado = textoTecla //Asigna a  resultado el texto de la tecla pulsada.
-    //No es la inicialización.
-  } else {
-    //Máxima longitud del número.
-    if (resultado.length <= MAXIMO_DIGITOS) {
-      resultado += textoTecla //Concatena a resultado el texto de la tecla pulsado.
+  if (!igual) {
+    //Si es la inicialización.
+    if (resultado == "0" || iniciarOperando) {
+      resultado = textoTecla //Asigna a  resultado el texto de la tecla pulsada.
+      //No es la inicialización.
+    } else {
+      //Máxima longitud del número.
+      if (resultado.length <= MAXIMO_DIGITOS) {
+        resultado += textoTecla //Concatena a resultado el texto de la tecla pulsado.
+      }
     }
+    iniciarOperando = false //El número ha sido inicializado.
+    resultadoDisplay.innerText = resultado  //Muestra en el display.
   }
-  iniciarOperando = false //El número ha sido inicializado.
-  resultadoDisplay.innerText = resultado  //Muestra en el display.
 }
 
 //-------------------------------------------------------------------------------------------------
 function procesarPunto(textoTecla) {
-  //No existe el punto decimal.
-  if (!existePunto) {
-    resultado += textoTecla //Concatena a resultado el texto de la tecla pulsado.
-    existePunto = true;
-    iniciarOperando = false //El número ha sido inicializado.
+  if (!igual) {
+    //No existe el punto decimal.
+    if (!existePunto) {
+      resultado += textoTecla //Concatena a resultado el texto de la tecla pulsado.
+      existePunto = true;
+      iniciarOperando = false //El número ha sido inicializado.
+    }
+    resultadoDisplay.innerText = resultado  //Muestra en el display.
   }
-  resultadoDisplay.innerText = resultado  //Muestra en el display.
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -178,8 +187,9 @@ function operar(textoTecla) {
       operador = ""
     }
   }
+  igual = false
   resultado = "0"
-  existePunto=false
+  existePunto = false
   resultadoDisplay.innerText = resultado  //Muestra en el display.
   mostrarExpresion()
 }
