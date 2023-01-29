@@ -1,5 +1,5 @@
 //Declaraciones
-const MAXIMO_DIGITOS=10 //Máximo de dígitos
+const MAXIMO_DIGITOS = 10 //Máximo de dígitos
 let resultado //Resultado.
 let iniciarOperando //Flag iniciar número en resutadoDisplay.
 let existePunto //Flag presencia del punto decimal.
@@ -61,20 +61,25 @@ function accionTecla() {
 
 //-------------------------------------------------------------------------------------------------
 //Inicializa el resultado.
-function inicializaResultado(){
-  resultado=0
-  resultadoDisplay.innerText=resultado;
+function inicializaResultado() {
+  resultado = 0
+  resultadoDisplay.innerText = resultado;
 }
 
 //-------------------------------------------------------------------------------------------------
 //Invertir signo.
 function invertirSigno() {
-  if (resultado.charAt(0) != '-') {
-    resultado = "-" + resultado
-  } else {
-    resultado = resultado.substring(1)
+  //El resultado no es 0.
+  if (resultado != "0") {
+    //El primer caracter de la cadena no es -.
+    if (resultado.charAt(0) != '-') {
+      resultado = "-" + resultado
+    //El primer caracter de la cadena es -.
+    } else {
+      resultado = resultado.substring(1)
+    }
+    resultadoDisplay.innerText = resultado;
   }
-  resultadoDisplay.innerText = resultado;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -85,7 +90,7 @@ function procesarIgual(textoTecla) {
     resultado = eval(parseFloat(operando1) + operador + parseFloat(resultado))
     operando1 = ""
     operador = ""
-    resultado=resultado.toString()
+    resultado = resultado.toString()
     resultadoDisplay.innerText = resultado
   }
   mostrarExpresion()
@@ -100,8 +105,8 @@ function procesarNumero(textoTecla) {
     //No es la inicialización.
   } else {
     //Máxima longitud del número.
-    if(resultado.length<=MAXIMO_DIGITOS){
-    resultado += textoTecla //Concatena a resultado el texto de la tecla pulsado.
+    if (resultado.length <= MAXIMO_DIGITOS) {
+      resultado += textoTecla //Concatena a resultado el texto de la tecla pulsado.
     }
   }
   iniciarOperando = false //El número ha sido inicializado.
@@ -126,34 +131,55 @@ function operar(textoTecla) {
   if (operando1 == "") {
     operando1 = resultado
     operador = textoTecla
-    existePunto=false
+    existePunto = false
     iniciarOperando = true
     //Existe un operando previo.
   } else {
-    switch (textoTecla) {
-      //Suma
-      case "+":
-        operando1 = parseFloat(operando1) + parseFloat(resultado)
-        operador = ""
-        break;
-      //Resta
-      case "-":
-        operando1 = parseFloat(operando1) - parseFloat(resultado)
-        operador = ""
-        break;
-      //Multiplicación.
-      case "*":
-        operando1 = parseFloat(operando1) * parseFloat(resultado)
-        operador = ""
-        break;
-      //División.
-      case "/":
-        operando1 = parseFloat(operando1) / parseFloat(resultado)
-        operador = ""
-        break;
+    //Existe una expresión iniciada.
+    if (operador != "") {
+      switch (operador) {
+        //Suma
+        case "+":
+          operando1 = parseFloat(operando1) + parseFloat(resultado)
+          break;
+        //Resta
+        case "-":
+          operando1 = parseFloat(operando1) - parseFloat(resultado)
+          break;
+        //Multiplicación.
+        case "*":
+          operando1 = parseFloat(operando1) * parseFloat(resultado)
+          break;
+        //División.
+        case "/":
+          operando1 = parseFloat(operando1) / parseFloat(resultado)
+          break;
+      }
+      operador = textoTecla;
+    } else {
+      switch (textoTecla) {
+        //Suma
+        case "+":
+          operando1 = parseFloat(operando1) + parseFloat(resultado)
+          break;
+        //Resta
+        case "-":
+          operando1 = parseFloat(operando1) - parseFloat(resultado)
+          break;
+        //Multiplicación.
+        case "*":
+          operando1 = parseFloat(operando1) * parseFloat(resultado)
+          break;
+        //División.
+        case "/":
+          operando1 = parseFloat(operando1) / parseFloat(resultado)
+          break;
+      }
+      operador = ""
     }
   }
   resultado = "0"
+  existePunto=false
   resultadoDisplay.innerText = resultado  //Muestra en el display.
   mostrarExpresion()
 }

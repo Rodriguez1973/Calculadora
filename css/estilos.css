@@ -19,6 +19,10 @@
     padding: 10px;
 }
 
+#principal tr:first-child td{
+    background-color: white;
+}
+
 #principal tr p:last-child{
     font-size: 30px;
     height: 30px;
@@ -26,7 +30,7 @@
 
 td {
     text-align: center;
-    background-color: rgb(229, 247, 237);
+    background-color: rgb(223, 228, 225);
     font-size: 24px;
     color: black;
     padding: 20px;
@@ -46,4 +50,8 @@ td {
     text-align: right;
     border-radius: 10px;
     color:black;
+}
+
+td:active{
+    background-color: rgb(179, 250, 179);
 }
